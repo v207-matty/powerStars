@@ -18,9 +18,8 @@ class PlayState extends FlxState
 
 	var inputEnabled:Bool = false;
 
-	var realm:Realm = NONE;
-	var section:Array<Int> = [0, 0];
-    var sectionText:FlxText;
+	var section:Array<Int> = [0, 0, Realm.NONE];
+	var sectionText:FlxText;
 
 	var transitionColor:FlxColor = FlxColor.WHITE;
 	var transitionDuration:Float = 1;
@@ -30,7 +29,9 @@ class PlayState extends FlxState
 		super.create();
 
 		add(player = new Player());
-        add(sectionText = new FlxText(0,0,0,'',16));
+		add(sectionText = new FlxText(0, 0, 0, '', 16));
+
+		setRealm(Realm.MOTH);
 
 		refresh(false);
 	}
@@ -91,7 +92,9 @@ class PlayState extends FlxState
 
 			inputEnabled = true;
 
-            sectionText.text = '${section}';
+			loadSection(section);
+
+			sectionText.text = '${section}';
 
 			if (cameraFade)
 				camera.fade(transitionColor, transitionDuration / 2, true, false);
@@ -104,4 +107,14 @@ class PlayState extends FlxState
 		else
 			onCameraFadeDone();
 	}
+
+	public function loadSection(section:Array<Int>)
+	{
+		var x = section[0];
+		var y = section[1];
+		var realm:Realm = section[2];
+	}
+
+	public function setRealm(realm:Realm)
+		section[2] = realm;
 }
